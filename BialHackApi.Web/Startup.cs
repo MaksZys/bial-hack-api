@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using BialHackApi.Base.DAL;
+using BialHackApi.Base.Interfaces;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,6 +34,12 @@ namespace BialHackApi.Web
             });
             services.AddMvc();
 
+            // Register providers
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // Register dbConnections
+            services.AddTransient<IDataConnection, DataConnection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

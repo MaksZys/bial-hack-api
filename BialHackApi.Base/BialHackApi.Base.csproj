@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <Folder Include="DTO\" />
-    <Folder Include="DAL\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.5" />
   </ItemGroup>
 
   <ItemGroup>
