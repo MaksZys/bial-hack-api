@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DataImport
 {
@@ -6,7 +7,11 @@ namespace DataImport
     {
         static void Main(string[] args)
         {
+            var x = new MPODataImportService();
+            var result = x.ImportData();
             Console.WriteLine("Hello World!");
+
+            Console.ReadKey();
         }
     }
 }
