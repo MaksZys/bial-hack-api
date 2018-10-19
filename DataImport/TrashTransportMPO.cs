@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace BialHackApi.Base.DTO
+namespace DataImport
 {
-    public class TrashTransport
+    public class TrashTransportMPO
     {
         public DateTime Date { get; set; }
         public string Description { get; set; }
-        public string RfId0 {get;set;}
+        public string RfId0 { get; set; }
         public string VehicleName { get; set; }
         public string VehicleNumber { get; set; }
         public string TrashType { get; set; }

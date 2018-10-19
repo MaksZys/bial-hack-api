@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DataImport
 {
@@ -9,6 +10,8 @@ namespace DataImport
             var blyskService = new BlyskDataImportService();
             blyskService.ReadData();
 
+            var x = new MPODataImportService();
+            var result = x.ImportData();
             Console.WriteLine("Hello World!");
             Console.ReadKey();
         }
