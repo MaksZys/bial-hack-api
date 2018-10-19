@@ -2,6 +2,7 @@
 using BialHackApi.Base.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -106,5 +107,23 @@ namespace BialHackApi.Base.Services
         //        AddressComponents = result.Results[0].AddressComponents.Take(1).ToArray()
         //    };
         //}
+
+        public async Task<StepsMapsDrowning> CreateStepsByCoords(decimal startLat, decimal startLng, decimal targetLat, decimal targetLng)
+        {
+            string path = string.Format("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={0},{1}&destinations={2},{3}&key={4}", startLat, startLng, targetLat, targetLng, configuration["Google:GoogleDistanceMartixApiKey"]);
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(path);
+            var responseData = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<GoogleMapsRoutsResponseDTO>(responseData);
+
+            return new StepsMapsDrowning
+            {
+                StartPointLat = result.routes[0].legs[0].start_location.lat,
+                StartPointLng = result.routes[0].legs[0].start_location.lng,
+                EndPiontLat = result.routes[0].legs[0].end_location.lat,
+                EndPiontLng = result.routes[0].legs[0].end_location.lng,
+                Steps = result.routes[0].legs[0].steps
+            };
+        }
     }
 }
