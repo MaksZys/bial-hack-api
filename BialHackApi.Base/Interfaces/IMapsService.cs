@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using BialHackApi.Base.Services;
+using System.Threading.Tasks;
 
 namespace BialHackApi.Base.Interfaces
 {
@@ -8,5 +9,6 @@ namespace BialHackApi.Base.Interfaces
         Task<ILocation> GetLocationByLatLng(decimal latitude, decimal longitude);
         Task<ILocation> GetLocationByAddress(string address);
         Task<ILocation> GetLocationByExternalId(string externalId);
+        Task<StepsMapsDrowning> CreateStepsByCoords(decimal startLat, decimal startLng, decimal targetLat, decimal targetLng);
     }
 }

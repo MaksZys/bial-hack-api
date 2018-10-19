@@ -133,10 +133,6 @@ namespace BialHackApi.Base.Services
 
     public class StepsMapsDrowning
     {
-        public double StartPointLat { get; set; }
-        public double StartPointLng { get; set; }
-        public double EndPiontLat { get; set; }
-        public double EndPiontLng { get; set; }
         public List<Step> Steps = new List<Step>();
     }
 }

@@ -118,10 +118,6 @@ namespace BialHackApi.Base.Services
 
             return new StepsMapsDrowning
             {
-                StartPointLat = result.routes[0].legs[0].start_location.lat,
-                StartPointLng = result.routes[0].legs[0].start_location.lng,
-                EndPiontLat = result.routes[0].legs[0].end_location.lat,
-                EndPiontLng = result.routes[0].legs[0].end_location.lng,
                 Steps = result.routes[0].legs[0].steps
             };
         }
