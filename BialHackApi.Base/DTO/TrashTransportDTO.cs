@@ -2,7 +2,7 @@
 
 namespace BialHackApi.Base.DTO
 {
-    public class TrashTransport
+    public class TrashTransportDTO
     {
         public DateTime Date { get; set; }
         public string Description { get; set; }

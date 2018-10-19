@@ -1,5 +1,6 @@
 ﻿using BialHackApi.Base.DAL;
 using BialHackApi.Base.Interfaces;
+using BialHackApi.Base.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,6 +41,10 @@ namespace BialHackApi.Web
 
             // Register dbConnections
             services.AddTransient<IDataConnection, DataConnection>();
+
+            // Register Services
+            services.AddScoped<IMapsService, GoogleMapsService>();
+            services.AddScoped<ITrashTransportService, TrashTransportService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
