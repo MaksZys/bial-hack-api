@@ -6,7 +6,10 @@ namespace DataImport
     {
         static void Main(string[] args)
         {
+            var a = new BlyskDataImportService();
+            a.ReadData();
             Console.WriteLine("Hello World!");
+            Console.ReadKey();
         }
     }
 }
