@@ -157,5 +157,13 @@ namespace BialHackApi.Web.Controllers
                 return trashTransportList.Where(t => t.Lat > 1).ToList();
             }
         }
+
+
+        [HttpGet]
+        public async Task<IEnumerable<TrashTransportDTO>> GetByRfId(string rfId) => await trashTransportService.GetTrashTransportByRefId(rfId);
+
+
+        [HttpGet]
+        public async Task<IEnumerable<TrashTransportDTO>> GetByVehicleNumber(string vehicleNumber) => await trashTransportService.GetTrashTransportByVehicleNumber(vehicleNumber);
     }
 }
