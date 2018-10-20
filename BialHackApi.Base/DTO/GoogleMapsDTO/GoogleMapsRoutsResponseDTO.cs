@@ -133,6 +133,7 @@ namespace BialHackApi.Base.Services
 
     public class StepsMapsDrowning
     {
-        public List<Step> Steps = new List<Step>();
+        public StartLocation2[] Steps { get; set; }
+        public string EncodedPlaces { get; set; }
     }
 }

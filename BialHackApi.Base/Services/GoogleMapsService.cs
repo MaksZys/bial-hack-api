@@ -3,6 +3,7 @@ using BialHackApi.Base.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -118,7 +119,8 @@ namespace BialHackApi.Base.Services
 
             return new StepsMapsDrowning
             {
-                Steps = result.routes[0].legs[0].steps
+                Steps = result.routes[0].legs[0].steps.Select(c => c.start_location).ToArray(),
+                EncodedPlaces = result.routes[0].overview_polyline.points
             };
         }
     }
