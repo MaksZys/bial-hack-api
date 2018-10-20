@@ -17,7 +17,7 @@ namespace BialHackApi.Web.Controllers
     {
         private readonly ISearchService searchService;
 
-        public SearchController(ISearchService searchService)
+        public SearchController(ISearchService searchService) 
         {
             this.searchService = searchService;
         }
