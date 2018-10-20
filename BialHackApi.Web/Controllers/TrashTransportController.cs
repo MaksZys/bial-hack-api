@@ -31,7 +31,7 @@ namespace BialHackApi.Web.Controllers
         public async Task<StepsMapsDrowning> GetRoute(decimal startLat, decimal startLng, decimal destLat, decimal destLng) => await mapsService.CreateStepsByCoords(startLat, startLng, destLat, destLng);
 
         [HttpGet]
-        public async Task<IEnumerable<GroupDTO>> CreateGroups()
+        public async Task<IEnumerable<GroupDTO>> CreateGroups(string v)
         {
             var companies = new List<GroupDTO>
             {
@@ -119,7 +119,7 @@ namespace BialHackApi.Web.Controllers
             return companies;
         }
 
-        public static List<PointDTO> GetPoints()
+        public List<PointDTO> GetPoints()
         {
             string sWebRootFolder = System.AppDomain.CurrentDomain.BaseDirectory;
             List<PointDTO> trashTransportList = new List<PointDTO>();
