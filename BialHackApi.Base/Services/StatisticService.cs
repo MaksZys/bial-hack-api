@@ -119,7 +119,7 @@ namespace BialHackApi.Base.Services
             using (var connect = dataConnection.Connect())
             {
                 string trashTransportQuery =
-                    $@"SELECT [Id], [Date], [Description], [RfId0], [VehicleName], [VehicleNumber], [TrashType], [Container], [Note], [MgoType], [Latitude], [Longitude]
+                    $@"SELECT TOP(5) [Id], [Date], [Description], [RfId0], [VehicleName], [VehicleNumber], [TrashType], [Container], [Note], [MgoType], [Latitude], [Longitude]
                        FROM [dbo].[TrashTransport]
                        WHERE YEAR([Date]) = @Year AND MONTH([Date]) = @Month AND DAY([Date]) = @Day";
 
@@ -139,7 +139,7 @@ namespace BialHackApi.Base.Services
                     TimeSpan varTime = (DateTime)secondTransport.Date - (DateTime)firstTransport.Date;
                     int firstDiff = (int)varTime.TotalSeconds;
 
-                    if (firstDiff <= 0) continue;
+                    if (firstDiff <= 0 || firstTransport.Latitude == 0 | firstTransport.Longitude == 0 |+ secondTransport.Latitude == 0 || secondTransport.Longitude == 0) continue;
 
                     var distanceDuration = await mapsService.CalculateDistanceByCoords(firstTransport.Latitude, firstTransport.Longitude, secondTransport.Latitude, secondTransport.Longitude);
                     var secondDiffMaps = distanceDuration.Duration;
