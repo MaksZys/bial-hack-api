@@ -4,23 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
-using System.Text;
 
 namespace DataImport
 {
-    public class BlyskDataImportService
+    public class KomaDataImportService
     {
         private Dictionary<string, int> monthsDictionary = new Dictionary<string, int>
         {
-            { "Styczeń", 1 },
-            { "Luty", 2 },
             { "Marzec", 3 },
             { "Kwiecień", 4 },
             { "Maj", 5 },
             { "Czerwiec", 6 },
             { "Lipiec", 7 },
             { "Sierpień", 8 },
-            { "Wrzesień", 9 },
             { "Październik", 10 },
             { "Listopad", 11},
             { "Grudzień", 12 },
@@ -29,48 +25,52 @@ namespace DataImport
         public void ReadData()
         {
             string sWebRootFolder = System.AppDomain.CurrentDomain.BaseDirectory;
-            List<TrashTransportBlysk> trashTransportList = new List<TrashTransportBlysk>();
-            foreach (KeyValuePair<string, int> month in monthsDictionary)
+            List<TrashTransportKoma> trashTransportList = new List<TrashTransportKoma>();
+
+            var worksheets = new string[] { "SEKTOR II", "SEKTOR V"};
+
+            foreach (var worksheet in worksheets)
             {
-
-                string sFileName = $"Raport {month.Key}.xlsx";
-                FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, sFileName));
-                using (ExcelPackage package = new ExcelPackage(file))
+                foreach (KeyValuePair<string, int> month in monthsDictionary)
                 {
-                    ExcelWorksheet workSheet = package.Workbook.Worksheets["szablon"];
-                    int totalRows = workSheet.Dimension.Rows;
 
-                    for (int i = 22; i <= totalRows; i++)
+                    string sFileName = $"Inwentaryzacja {month.Key}.xlsx";
+                    FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, sFileName));
+                    using (ExcelPackage package = new ExcelPackage(file))
                     {
-                        var latitudeString = workSheet.Cells[i, 9].Value.ToString().Split(',')[0].Replace('.', ',');
+                        ExcelWorksheet workSheet = package.Workbook.Worksheets[worksheet];
+                        int totalRows = workSheet.Dimension.Rows;
 
-                        var latitude = 0.000;
-
-                        var longitude = 0.000;
-                        var c = workSheet.Cells[i, 1].Value.ToString();
-                        DateTime date = DateTime.FromOADate(Convert.ToDouble(c));
-
-                        if (latitudeString != "")
+                        for (int i = 4; i <= totalRows; i++)
                         {
-                            latitude = Convert.ToDouble(workSheet.Cells[i, 9].Value.ToString().Split(',')[0].Replace('.', ','));
 
-                            longitude = Convert.ToDouble(workSheet.Cells[i, 9].Value.ToString().Split(',')[1].Replace('.', ','));
+                            var latitude = Convert.ToDouble(workSheet.Cells[i, 2].Value?.ToString().Replace('.',','));
+
+                            var longitude = Convert.ToDouble(workSheet.Cells[i, 1].Value?.ToString().Replace('.', ','));
+
+                            DateTime date = new DateTime(2017, month.Value, 1);
+
+                            trashTransportList.Add(new TrashTransportKoma
+                            {
+                                Date = date,
+                                Latitude = latitude,
+                                Longitude = longitude,
+                                TrashType = workSheet.Cells[i, 6].Value?.ToString()
+                            });
+
+                            if (workSheet.Cells[i, 9].Value != null)
+                            {
+                                var val = workSheet.Cells[i, 9].Value.ToString();
+
+                                var counter = trashTransportList.Count-1;
+
+                                while(trashTransportList[counter].RfId0 == null && counter > 0)
+                                {
+                                    trashTransportList[counter].RfId0 = val;
+                                    counter--;
+                                }
+                            }
                         }
-
-                        trashTransportList.Add(new TrashTransportBlysk
-                        {
-                            Date = date,
-                            Container = workSheet.Cells[i, 16].Value?.ToString(),
-                            Description = workSheet.Cells[i, 2].Value?.ToString(),
-                            MgoType = workSheet.Cells[i, 14].Value?.ToString(),
-                            RfId0 = workSheet.Cells[i, 3].Value?.ToString(),
-                            Note = workSheet.Cells[i, 17].Value?.ToString(),
-                            VehicleName = workSheet.Cells[i, 6]?.Value.ToString(),
-                            VehicleNumber = workSheet.Cells[i, 7]?.Value.ToString(),
-                            Latitude = latitude,
-                            Longitude = longitude,
-                            TrashType = workSheet.Cells[i, 15].Value?.ToString()
-                        });
                     }
                 }
             }

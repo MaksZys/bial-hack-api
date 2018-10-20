@@ -45,6 +45,7 @@ namespace BialHackApi.Web
             // Register Services
             services.AddScoped<IMapsService, GoogleMapsService>();
             services.AddScoped<ITrashTransportService, TrashTransportService>();
+            services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<StatisticService, StatisticService>();
         }
 
