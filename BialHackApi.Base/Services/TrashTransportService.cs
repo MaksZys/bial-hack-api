@@ -31,6 +31,40 @@ namespace BialHackApi.Base.Services
                 return result;
             }
         }
+        public async Task<IEnumerable<TrashTransportDTO>> GetTrashTransportByRefId(string rfId)
+        {
+            using (var connect = dataConnection.Connect())
+            {
+                string trashTransportQuery =
+                    $@"SELECT [Id], [Date], [Description], [RfId0], [VehicleName], [VehicleNumber], [TrashType], [Container], [Note], [MgoType], [Latitude], [Longitude]
+                       FROM [dbo].[TrashTransport]
+                       WHERE [RfId0] = @RfId";
 
+                var result = await connect.QueryAsync<TrashTransportDTO>(trashTransportQuery, new
+                {
+                    RfId = rfId
+                });
+
+                return result;
+            }
+        }
+
+        public async Task<IEnumerable<TrashTransportDTO>> GetTrashTransportByVehicleNumber(string vehicleNumber)
+        {
+            using (var connect = dataConnection.Connect())
+            {
+                string trashTransportQuery =
+                    $@"SELECT [Id], [Date], [Description], [RfId0], [VehicleName], [VehicleNumber], [TrashType], [Container], [Note], [MgoType], [Latitude], [Longitude]
+                       FROM [dbo].[TrashTransport]
+                       WHERE [VehicleNumber] = @VehicleNumber";
+
+                var result = await connect.QueryAsync<TrashTransportDTO>(trashTransportQuery, new
+                {
+                    VehicleNumber = vehicleNumber
+                });
+
+                return result;
+            }
+        }
     }
 }

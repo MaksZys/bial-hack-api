@@ -111,7 +111,7 @@ namespace BialHackApi.Base.Services
 
         public async Task<StepsMapsDrowning> CreateStepsByCoords(decimal startLat, decimal startLng, decimal targetLat, decimal targetLng)
         {
-            string path = string.Format("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={0},{1}&destinations={2},{3}&key={4}", startLat, startLng, targetLat, targetLng, configuration["Google:GoogleDistanceMartixApiKey"]);
+            string path = string.Format("https://maps.googleapis.com/maps/api/directions/json?origin={0},{1}&destination={2},{3}&key={4}", startLat, startLng, targetLat, targetLng, configuration["Google:GoogleDistanceMatrixApiKey"]);
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(path);
             var responseData = await response.Content.ReadAsStringAsync();

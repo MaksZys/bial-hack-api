@@ -25,5 +25,13 @@ namespace BialHackApi.Web.Controllers
 
         [HttpGet]
         public async Task<StepsMapsDrowning> GetRoute(decimal startLat, decimal startLng, decimal destLat, decimal destLng) => await mapsService.CreateStepsByCoords(startLat, startLng, destLat, destLng);
+
+
+        [HttpGet]
+        public async Task<IEnumerable<TrashTransportDTO>> GetByRfId(string rfId) => await trashTransportService.GetTrashTransportByRefId(rfId);
+
+
+        [HttpGet]
+        public async Task<IEnumerable<TrashTransportDTO>> GetByVehicleNumber(string vehicleNumber) => await trashTransportService.GetTrashTransportByVehicleNumber(vehicleNumber);
     }
 }
