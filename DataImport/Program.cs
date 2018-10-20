@@ -7,8 +7,8 @@ namespace DataImport
     {
         static void Main(string[] args)
         {
-            var blyskService = new BlyskDataImportService();
-            blyskService.ReadData();
+            //var blyskService = new BlyskDataImportService();
+            //blyskService.ReadData();
 
             var x = new MPODataImportService();
             var result = x.ImportData();

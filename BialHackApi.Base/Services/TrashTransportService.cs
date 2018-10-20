@@ -25,7 +25,7 @@ namespace BialHackApi.Base.Services
 
                 var result = await connect.QueryAsync<TrashTransportDTO>(trashTransportQuery, new
                 {
-                    Limit = 1000
+                    Limit = limit
                 });
 
                 return result;

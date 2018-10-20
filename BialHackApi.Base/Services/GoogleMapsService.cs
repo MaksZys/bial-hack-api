@@ -18,9 +18,9 @@ namespace BialHackApi.Base.Services
             this.configuration = configuration;
         }
 
-        public async Task<IDistanceDuration> CalculateDistanceByCoords(decimal startLat, decimal startLng, decimal targetLat, decimal targetLng)
+        public async Task<IDistanceDuration> CalculateDistanceByCoords(double startLat, double startLng, double targetLat, double targetLng)
         {
-            string path = string.Format("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={0},{1}&destinations={2},{3}&key={4}", startLat, startLng, targetLat, targetLng, configuration["Google:GoogleDistanceMartixApiKey"]);
+            string path = string.Format("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={0},{1}&destinations={2},{3}&key={4}", startLat, startLng, targetLat, targetLng, configuration["Google:GoogleDistanceMatrixApiKey"]);
 
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(path);
