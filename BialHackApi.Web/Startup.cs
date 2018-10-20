@@ -45,6 +45,7 @@ namespace BialHackApi.Web
             // Register Services
             services.AddScoped<IMapsService, GoogleMapsService>();
             services.AddScoped<ITrashTransportService, TrashTransportService>();
+            services.AddScoped<ISearchService, SearchService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -47,8 +47,8 @@ namespace DataImport
                         var latitude = 0.000;
 
                         var longitude = 0.000;
-
-                        DateTime date = new DateTime(2017, month.Value, 1);
+                        var c = workSheet.Cells[i, 1].Value.ToString();
+                        DateTime date = DateTime.FromOADate(Convert.ToDouble(c));
 
                         if (latitudeString != "")
                         {
