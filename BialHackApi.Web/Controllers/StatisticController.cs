@@ -27,6 +27,6 @@ namespace BialHackApi.Web.Controllers
 
 
         [HttpGet]
-        public async Task<IEnumerable<TimeAnomalyDTO>> CheckForTimeAnomaliesByMonth(int month) => await statisticService.CheckForTimeAnomaliesByMonth(month);
+        public async Task<IEnumerable<TimeAnomalyDTO>> CheckForTimeAnomaliesByDate(int year, int month, int day) => await statisticService.CheckForTimeAnomaliesByDate(year, month, day);
     }
 }

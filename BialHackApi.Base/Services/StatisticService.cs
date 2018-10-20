@@ -112,7 +112,7 @@ namespace BialHackApi.Base.Services
         }
 
 
-        public async Task<IEnumerable<TimeAnomalyDTO>> CheckForTimeAnomaliesByMonth(int month)
+        public async Task<IEnumerable<TimeAnomalyDTO>> CheckForTimeAnomaliesByDate(int year, int month, int day)
         {
             List<TimeAnomalyDTO> anomalies = new List<TimeAnomalyDTO>();
 
@@ -121,11 +121,13 @@ namespace BialHackApi.Base.Services
                 string trashTransportQuery =
                     $@"SELECT [Id], [Date], [Description], [RfId0], [VehicleName], [VehicleNumber], [TrashType], [Container], [Note], [MgoType], [Latitude], [Longitude]
                        FROM [dbo].[TrashTransport]
-                       WHERE MONTH([Date]) = @Month";
+                       WHERE YEAR([Date]) = @Year AND MONTH([Date]) = @Month AND DAY([Date]) = @Day";
 
                 var trashTransports = await connect.QueryAsync<TrashTransportDTO>(trashTransportQuery, new
                 {
-                    Month = month
+                    Year = year,
+                    Month = month,
+                    Day = day
                 });
 
                 var trashTransportList = trashTransports.ToArray();
